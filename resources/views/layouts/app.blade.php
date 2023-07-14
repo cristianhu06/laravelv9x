@@ -36,6 +36,9 @@
 					@auth()
                     <ul class="navbar-nav ms-auto">
 						<!--Nav Bar Hooks - Do not delete!!-->
+						<li class="nav-item">
+                            <a href="{{ url('/empresas') }}" class="nav-link"><i class="fab fa-laravel text-info"></i> Empresas</a> 
+                        </li>
 
                         <li class="nav-item">
                             <a href="{{ url('/empleados') }}" class="nav-link"><i class="fab fa-brands fa-hashnode text-info"></i> Empleados</a>

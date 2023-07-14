@@ -4,114 +4,107 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Empleado;
+use App\Models\Empresa;
 
-class Empleados extends Component
+class Empresas extends Component
 {
     use WithPagination;
 
 	protected $paginationTheme = 'bootstrap';
-    public $selected_id, $keyWord, $nombre, $apellidos, $telefono, $direccion, $cargo, $correo;
+    public $selected_id, $keyWord, $nombre, $direccion, $telefono, $correo, $descripcion;
 
     public function render()
     {
 		$keyWord = '%'.$this->keyWord .'%';
-        return view('livewire.empleados.view', [
-            'empleados' => Empleado::latest()
+        return view('livewire.empresas.view', [
+            'empresas' => Empresa::latest()
 						->orWhere('nombre', 'LIKE', $keyWord)
-						->orWhere('apellidos', 'LIKE', $keyWord)
-						->orWhere('telefono', 'LIKE', $keyWord)
 						->orWhere('direccion', 'LIKE', $keyWord)
-						->orWhere('cargo', 'LIKE', $keyWord)
+						->orWhere('telefono', 'LIKE', $keyWord)
 						->orWhere('correo', 'LIKE', $keyWord)
-						->paginate(20),
+						->orWhere('descripcion', 'LIKE', $keyWord)
+						->paginate(10),
         ]);
     }
-
+	
     public function cancel()
     {
         $this->resetInput();
     }
-
+	
     private function resetInput()
-    {
+    {		
 		$this->nombre = null;
-		$this->apellidos = null;
-		$this->telefono = null;
 		$this->direccion = null;
-		$this->cargo = null;
+		$this->telefono = null;
 		$this->correo = null;
+		$this->descripcion = null;
     }
 
     public function store()
     {
         $this->validate([
 		'nombre' => 'required',
-		'apellidos' => 'required',
-		'telefono' => 'required',
 		'direccion' => 'required',
-		'cargo' => 'required',
+		'telefono' => 'required',
 		'correo' => 'required',
+		'descripcion' => 'required',
         ]);
 
-        Empleado::create([
+        Empresa::create([ 
 			'nombre' => $this-> nombre,
-			'apellidos' => $this-> apellidos,
-			'telefono' => $this-> telefono,
 			'direccion' => $this-> direccion,
-			'cargo' => $this-> cargo,
-			'correo' => $this-> correo
+			'telefono' => $this-> telefono,
+			'correo' => $this-> correo,
+			'descripcion' => $this-> descripcion
         ]);
-
+        
         $this->resetInput();
 		$this->dispatchBrowserEvent('closeModal');
-		session()->flash('message', 'Empleado Successfully created.');
+		session()->flash('message', 'Empresa Successfully created.');
     }
 
     public function edit($id)
     {
-        $record = Empleado::findOrFail($id);
-        $this->selected_id = $id;
+        $record = Empresa::findOrFail($id);
+        $this->selected_id = $id; 
 		$this->nombre = $record-> nombre;
-		$this->apellidos = $record-> apellidos;
-		$this->telefono = $record-> telefono;
 		$this->direccion = $record-> direccion;
-		$this->cargo = $record-> cargo;
+		$this->telefono = $record-> telefono;
 		$this->correo = $record-> correo;
+		$this->descripcion = $record-> descripcion;
     }
 
     public function update()
     {
         $this->validate([
 		'nombre' => 'required',
-		'apellidos' => 'required',
-		'telefono' => 'required',
 		'direccion' => 'required',
-		'cargo' => 'required',
+		'telefono' => 'required',
 		'correo' => 'required',
+		'descripcion' => 'required',
         ]);
 
         if ($this->selected_id) {
-			$record = Empleado::find($this->selected_id);
-            $record->update([
+			$record = Empresa::find($this->selected_id);
+            $record->update([ 
 			'nombre' => $this-> nombre,
-			'apellidos' => $this-> apellidos,
-			'telefono' => $this-> telefono,
 			'direccion' => $this-> direccion,
-			'cargo' => $this-> cargo,
-			'correo' => $this-> correo
+			'telefono' => $this-> telefono,
+			'correo' => $this-> correo,
+			'descripcion' => $this-> descripcion
             ]);
 
             $this->resetInput();
             $this->dispatchBrowserEvent('closeModal');
-			session()->flash('message', 'Empleado Successfully updated.');
+			session()->flash('message', 'Empresa Successfully updated.');
         }
     }
 
     public function destroy($id)
     {
         if ($id) {
-            Empleado::where('id', $id)->delete();
+            Empresa::where('id', $id)->delete();
         }
     }
 }
