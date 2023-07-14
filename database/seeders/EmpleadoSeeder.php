@@ -15,7 +15,7 @@ class EmpleadoSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create();
+        $faker = Faker::create('es_ES');
 
         for ($i = 0; $i < 1500; $i++) {
             Empleado::create([
@@ -23,7 +23,7 @@ class EmpleadoSeeder extends Seeder
                 'apellidos' => $faker->lastName,
                 'telefono' => $faker->phoneNumber,
                 'direccion' => $faker->address,
-                'cargo' => $faker->jobTitle,
+                'cargo' => $faker->company,
                 'correo' => $faker->unique()->safeEmail,
             ]);
         }
