@@ -5,9 +5,11 @@
 			<div class="card">
 				<div class="card-header">
 					<div style="display: flex; justify-content: space-between; align-items: center;">
-						<div class="float-left">
-							<h4><i class="fab fa-laravel text-info"></i>
-							Empresa Listing </h4>
+						<div class="float-left"  style="display: flex; align-items: center;">
+                            <div style="width: 32px; height: 32px; overflow: hidden; margin-right: 10px;">
+                                <img src="{{ asset('img/livewire.png') }}" alt="Logo" style="width: 100%; height: auto;">
+                            </div>
+							<h4>Lista de Empresas</h4>
 						</div>
 						@if (session()->has('message'))
 						<div wire:poll.4s class="btn btn-sm btn-success" style="margin-top:0px; margin-bottom:0px;"> {{ session('message') }} </div>
@@ -20,14 +22,14 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="card-body">
 						@include('livewire.empresas.modals')
 				<div class="table-responsive">
 					<table class="table table-bordered table-sm">
 						<thead class="thead">
-							<tr> 
-								<td>#</td> 
+							<tr>
+								<td>#</td>
 								<th>Nombre</th>
 								<th>Direccion</th>
 								<th>Telefono</th>
@@ -39,7 +41,7 @@
 						<tbody>
 							@forelse($empresas as $row)
 							<tr>
-								<td>{{ $loop->iteration }}</td> 
+								<td>{{ $loop->iteration }}</td>
 								<td>{{ $row->nombre }}</td>
 								<td>{{ $row->direccion }}</td>
 								<td>{{ $row->telefono }}</td>
@@ -52,9 +54,9 @@
 										</a>
 										<ul class="dropdown-menu">
 											<li><a data-bs-toggle="modal" data-bs-target="#updateDataModal" class="dropdown-item" wire:click="edit({{$row->id}})"><i class="fa fa-edit"></i> Edit </a></li>
-											<li><a class="dropdown-item" onclick="confirm('Confirm Delete Empresa id {{$row->id}}? \nDeleted Empresas cannot be recovered!')||event.stopImmediatePropagation()" wire:click="destroy({{$row->id}})"><i class="fa fa-trash"></i> Delete </a></li>  
+											<li><a class="dropdown-item" onclick="confirm('Confirm Delete Empresa id {{$row->id}}? \nDeleted Empresas cannot be recovered!')||event.stopImmediatePropagation()" wire:click="destroy({{$row->id}})"><i class="fa fa-trash"></i> Delete </a></li>
 										</ul>
-									</div>								
+									</div>
 								</td>
 							</tr>
 							@empty
@@ -63,7 +65,7 @@
 							</tr>
 							@endforelse
 						</tbody>
-					</table>						
+					</table>
 					<div class="float-end">{{ $empresas->links() }}</div>
 					</div>
 				</div>
