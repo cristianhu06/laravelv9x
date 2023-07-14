@@ -26,14 +26,14 @@ class Empresas extends Component
 						->paginate(10),
         ]);
     }
-	
+
     public function cancel()
     {
         $this->resetInput();
     }
-	
+
     private function resetInput()
-    {		
+    {
 		$this->nombre = null;
 		$this->direccion = null;
 		$this->telefono = null;
@@ -48,17 +48,17 @@ class Empresas extends Component
 		'direccion' => 'required',
 		'telefono' => 'required',
 		'correo' => 'required',
-		'descripcion' => 'required',
+		'descripcion' => '',
         ]);
 
-        Empresa::create([ 
+        Empresa::create([
 			'nombre' => $this-> nombre,
 			'direccion' => $this-> direccion,
 			'telefono' => $this-> telefono,
 			'correo' => $this-> correo,
 			'descripcion' => $this-> descripcion
         ]);
-        
+
         $this->resetInput();
 		$this->dispatchBrowserEvent('closeModal');
 		session()->flash('message', 'Empresa Successfully created.');
@@ -67,7 +67,7 @@ class Empresas extends Component
     public function edit($id)
     {
         $record = Empresa::findOrFail($id);
-        $this->selected_id = $id; 
+        $this->selected_id = $id;
 		$this->nombre = $record-> nombre;
 		$this->direccion = $record-> direccion;
 		$this->telefono = $record-> telefono;
@@ -82,12 +82,12 @@ class Empresas extends Component
 		'direccion' => 'required',
 		'telefono' => 'required',
 		'correo' => 'required',
-		'descripcion' => 'required',
+		'descripcion' => '',
         ]);
 
         if ($this->selected_id) {
 			$record = Empresa::find($this->selected_id);
-            $record->update([ 
+            $record->update([
 			'nombre' => $this-> nombre,
 			'direccion' => $this-> direccion,
 			'telefono' => $this-> telefono,

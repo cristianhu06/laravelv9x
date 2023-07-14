@@ -11,6 +11,7 @@ class Cargos extends Component
     use WithPagination;
 
 	protected $paginationTheme = 'bootstrap';
+
     public $selected_id, $keyWord, $nombre;
 
     public function render()
